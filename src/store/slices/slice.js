@@ -5,11 +5,11 @@ const userSlice = createSlice({
     initialState: [],
     reducers: {
         addUser(state, action) {
-            console.log("adding user")
             state.push(action.payload)
         },
         removeUser(state, action) {
-            console.log("removing user")
+            let userToDelete = action.payload
+            state.splice(userToDelete, 1)
         },
     }
 })

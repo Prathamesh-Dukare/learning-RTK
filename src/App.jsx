@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { useDispatch } from 'react-redux'
-import { addUser } from './store/slices/slice'
+import { addUser, removeUser } from './store/slices/slice'
 import { useSelector } from 'react-redux'
 
 function App() {
@@ -12,12 +12,24 @@ function App() {
 
   const handleVite = () => {
     console.log("adding vite user")
-    dispatch(addUser(`viteuser_id_${Math.random()}`))
+    let id = Math.random()
+    dispatch(addUser({
+      name: `viteuser_id_${id}`,
+      id: id
+    }))
   }
-
   const handleReact = () => {
     console.log("adding react user")
-    dispatch(addUser(`reactuser_id_${Math.random()}`))
+    let id = Math.random()
+    dispatch(addUser({
+      name: `reactuser_id_${id}`,
+      id: id
+    }))
+  }
+
+  const handleDelete = (id) => {
+    console.log("deleting user", id)
+    dispatch(removeUser(id))
   }
 
   return (
@@ -34,9 +46,11 @@ function App() {
       </div>
 
       <div className="users">
-      <h2>all users</h2>
+        <h2>all users</h2>
         {
-          data.map((user) => <p>{user}</p>)
+          data.map((user,id) => <div key={id}>
+            <p>{user.name}</p>
+            <button onClick={() => { handleDelete(id) }}>Delete</button></div>)
         }
       </div>
     </div >
